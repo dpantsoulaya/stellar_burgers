@@ -1,0 +1,15 @@
+.ingredients_list {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-top: 100px;
+}
+
+.place_order_container {
+	display: flex;
+	flex-direction: row;
+	gap: 40px;
+	justify-content: flex-end;
+	align-items: center;
+	margin-top: 40px;
+}

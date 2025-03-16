@@ -1,0 +1,16 @@
+.tab_container {
+	display: flex;
+	margin-bottom: 40px;
+}
+
+.ingredients_list {
+	list-style: none;
+	display: grid;
+	grid-template-columns: auto auto;
+	padding-right: 10px;
+}
+
+.ingredients_container {
+	height: 600px;
+	overflow: scroll;
+}

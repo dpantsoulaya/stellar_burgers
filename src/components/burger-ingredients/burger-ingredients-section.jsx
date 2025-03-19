@@ -19,8 +19,8 @@ export const BurgerIngredientsSection = ({ title, ingredients }) => {
 };
 
 BurgerIngredientsSection.propTypes = {
-	title: PropTypes.string,
+	title: PropTypes.string.isRequired,
 	ingredients: PropTypes.shape({
-		_id: PropTypes.number,
+		_id: PropTypes.number.isRequired,
 	}),
 };

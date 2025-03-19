@@ -2,6 +2,7 @@ import {
 	ConstructorElement,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import { Price } from '../price/price';
 import styles from './style.module.css';
 
@@ -43,4 +44,14 @@ export const BurgerConstructor = ({ elements }) => {
 			</div>
 		</div>
 	);
+};
+
+BurgerConstructor.propTypes = {
+	elements: PropTypes.arrayOf(
+		PropTypes.shape({
+			name: PropTypes.string,
+			price: PropTypes.number,
+			image: PropTypes.string,
+		})
+	).isRequired,
 };

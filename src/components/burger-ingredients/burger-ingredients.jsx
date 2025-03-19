@@ -1,4 +1,5 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import { BurgerIngredientsSection } from './burger-ingredients-section';
 import styles from './style.module.css';
 
@@ -40,4 +41,12 @@ export const BurgerIngredients = ({ ingredients }) => {
 			</div>
 		</div>
 	);
+};
+
+BurgerIngredients.propTypes = {
+	ingredients: PropTypes.arrayOf(
+		PropTypes.shape({
+			type: PropTypes.string,
+		})
+	),
 };

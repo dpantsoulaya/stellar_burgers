@@ -2,6 +2,7 @@ import { AppHeader } from '../components/app-header/app-header';
 import { BurgerIngredients } from '../components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../components/burger-constructor/burger-constructor';
 import { ingredients } from '@utils/data';
+import styles from './app.module.scss';
 
 export const App = () => {
 	const constructorElementsIds = [
@@ -18,10 +19,10 @@ export const App = () => {
 		<div className='page'>
 			<AppHeader />
 
-			<div style={{ display: 'flex', flexDirection: 'row', gap: '40px' }}>
+			<main className={styles.container}>
 				<BurgerIngredients ingredients={ingredients} />
 				<BurgerConstructor elements={elements} />
-			</div>
+			</main>
 		</div>
 	);
 };

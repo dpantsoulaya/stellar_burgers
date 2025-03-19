@@ -1,4 +1,5 @@
-import { IngredientCard } from '../app-header/ingredient-card/ingredient-card';
+import PropTypes from 'prop-types';
+import { IngredientCard } from './ingredient-card';
 import styles from './style.module.css';
 
 export const BurgerIngredientsSection = ({ title, ingredients }) => {
@@ -15,4 +16,11 @@ export const BurgerIngredientsSection = ({ title, ingredients }) => {
 			</ul>
 		</section>
 	);
+};
+
+BurgerIngredientsSection.propTypes = {
+	title: PropTypes.string,
+	ingredients: PropTypes.shape({
+		_id: PropTypes.number,
+	}),
 };

@@ -1,0 +1,13 @@
+.title {
+	text-align: center;
+}
+
+.characteristics_container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.characteristic {
+	text-align: center;
+}

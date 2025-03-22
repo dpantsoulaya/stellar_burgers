@@ -4,7 +4,7 @@ import { BurgerIngredientsSection } from './burger-ingredients-section';
 import styles from './style.module.css';
 
 export const BurgerIngredients = ({ ingredients }) => {
-	return (
+	return ingredients.length > 0 ? (
 		<div>
 			<h1 className='text text_type_main-large'>Соберите бургер</h1>
 			<div className={styles.tab_container}>
@@ -40,7 +40,7 @@ export const BurgerIngredients = ({ ingredients }) => {
 				/>
 			</div>
 		</div>
-	);
+	) : null;
 };
 
 BurgerIngredients.propTypes = {

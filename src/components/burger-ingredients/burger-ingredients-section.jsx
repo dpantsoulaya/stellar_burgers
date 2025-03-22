@@ -20,7 +20,9 @@ export const BurgerIngredientsSection = ({ title, ingredients }) => {
 
 BurgerIngredientsSection.propTypes = {
 	title: PropTypes.string.isRequired,
-	ingredients: PropTypes.shape({
-		_id: PropTypes.number.isRequired,
-	}),
+	ingredients: PropTypes.arrayOf(
+		PropTypes.shape({
+			_id: PropTypes.string,
+		})
+	),
 };

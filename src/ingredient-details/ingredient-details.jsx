@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
-import { Modal } from '../components/modal/modal';
 import { Characteristic } from './characteristic';
+import { IngredientType } from '@utils/types';
 import styles from './style.module.css';
 
-export const IngredientDetails = ({ ingredient, onClose }) => {
+export const IngredientDetails = ({ ingredient }) => {
 	return (
-		<Modal title='Детали ингредиента' onClose={onClose}>
+		<>
 			<img src={ingredient.image_large} alt='ingredient' />
 			<h2 className={styles.title}>{ingredient.name}</h2>
 			{/* Бэк не возвращает описание */}
@@ -16,17 +15,10 @@ export const IngredientDetails = ({ ingredient, onClose }) => {
 				<Characteristic name='Жиры, г' value={ingredient.fat} />
 				<Characteristic name='Углеводы, г' value={ingredient.carbohydrates} />
 			</div>
-		</Modal>
+		</>
 	);
 };
 
 IngredientDetails.propTypes = {
-	ingredient: PropTypes.shape({
-		name: PropTypes.string,
-		image_large: PropTypes.string,
-		calories: PropTypes.number,
-		fat: PropTypes.number,
-		carbohydrates: PropTypes.number,
-	}),
-	onClose: PropTypes.func,
+	ingredient: IngredientType,
 };

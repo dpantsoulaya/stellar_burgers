@@ -2,6 +2,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { BurgerIngredientsSection } from './burger-ingredients-section';
 import styles from './style.module.css';
+import { IngredientType } from '@utils/types';
 
 export const BurgerIngredients = ({ ingredients }) => {
 	return ingredients.length > 0 ? (
@@ -44,9 +45,5 @@ export const BurgerIngredients = ({ ingredients }) => {
 };
 
 BurgerIngredients.propTypes = {
-	ingredients: PropTypes.arrayOf(
-		PropTypes.shape({
-			type: PropTypes.string,
-		})
-	),
+	ingredients: PropTypes.arrayOf(IngredientType),
 };

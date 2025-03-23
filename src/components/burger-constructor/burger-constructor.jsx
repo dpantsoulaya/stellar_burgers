@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
 	ConstructorElement,
 	Button,
@@ -6,18 +5,13 @@ import {
 import PropTypes from 'prop-types';
 import { Price } from '../price/price';
 import { OrderDetails } from '../order-details/order-details';
+import { useModal } from '../../hooks/useModal';
+import { IngredientType } from '@utils/types';
+import { Modal } from '../modal/modal';
 import styles from './style.module.css';
 
 export const BurgerConstructor = ({ elements }) => {
-	const [showOrderDetails, setShowOrderDetails] = useState(false);
-
-	const handleOpenOrderDetails = () => {
-		setShowOrderDetails(true);
-	};
-
-	const handleCloseOrderDetails = () => {
-		setShowOrderDetails(false);
-	};
+	const { isModalOpen, openModal, closeModal } = useModal();
 
 	return elements.length > 0 ? (
 		<>
@@ -55,22 +49,20 @@ export const BurgerConstructor = ({ elements }) => {
 						htmlType='button'
 						type='primary'
 						size='large'
-						onClick={handleOpenOrderDetails}>
+						onClick={openModal}>
 						Оформить заказ
 					</Button>
 				</div>
 			</div>
-			{showOrderDetails && <OrderDetails onClose={handleCloseOrderDetails} />}
+			{isModalOpen && (
+				<Modal onClose={closeModal}>
+					<OrderDetails />
+				</Modal>
+			)}
 		</>
 	) : null;
 };
 
 BurgerConstructor.propTypes = {
-	elements: PropTypes.arrayOf(
-		PropTypes.shape({
-			name: PropTypes.string,
-			price: PropTypes.number,
-			image: PropTypes.string,
-		})
-	).isRequired,
+	elements: PropTypes.arrayOf(IngredientType).isRequired,
 };

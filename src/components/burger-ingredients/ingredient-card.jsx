@@ -1,42 +1,30 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Price } from '../price/price';
 import styles from './style.module.css';
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
+import { useModal } from '../../hooks/useModal';
+import { IngredientType } from '@utils/types';
+import { Modal } from '../modal/modal';
 
 export const IngredientCard = ({ ingredient }) => {
-	const [showIngredientDetails, setShowIngredientDetails] = useState(false);
-
-	const handleOpenIngredientDetails = () => {
-		setShowIngredientDetails(true);
-	};
-
-	const handleCloseIngredientDetails = () => {
-		setShowIngredientDetails(false);
-	};
+	const { isModalOpen, openModal, closeModal } = useModal();
 
 	return (
 		<>
-			<div
-				className={`ml-4 mr-3 ${styles.card_container}`}
-				onClick={handleOpenIngredientDetails}>
+			<div className={`ml-4 mr-3 ${styles.card_container}`} onClick={openModal}>
 				<img src={ingredient.image} alt='' />
 
 				<Price value={ingredient.price} />
 				<span>{ingredient.name}</span>
 			</div>
-			{showIngredientDetails && (
-				<IngredientDetails
-					ingredient={ingredient}
-					onClose={handleCloseIngredientDetails}
-				/>
+			{isModalOpen && (
+				<Modal title='Детали ингредиента' onClose={closeModal}>
+					<IngredientDetails ingredient={ingredient} />
+				</Modal>
 			)}
 		</>
 	);
 };
 
 IngredientCard.propTypes = {
-	name: PropTypes.string,
-	price: PropTypes.number,
-	image: PropTypes.string,
+	ingredient: IngredientType,
 };

@@ -12,7 +12,12 @@ export const App = () => {
 
 	useEffect(() => {
 		fetch(INGREDIENTS_URL)
-			.then((res) => res.json())
+			.then((res) => {
+				if (res.ok) {
+					return res.json();
+				}
+				return Promise.reject(`Ошибка ${res.status}`);
+			})
 			.then((data) => {
 				if (data.success) {
 					setIngredients(data.data);
@@ -20,7 +25,7 @@ export const App = () => {
 					alert('Ошибка получения данных с сервера об ингредиентах');
 				}
 			})
-			.catch((err) => console.error(err));
+			.catch(console.error);
 	}, []);
 
 	useEffect(() => {

@@ -1,9 +1,24 @@
+import { useSelector } from 'react-redux';
 import styles from './style.module.css';
+import {
+	getOrderDetails,
+	getOrderDetailsError,
+	getOrderDetailsLoading,
+} from '@services/order/reducer';
 
 export const OrderDetails = () => {
+	const orderDetails = useSelector(getOrderDetails);
+	const { loading } = useSelector(getOrderDetailsLoading);
+	const { error } = useSelector(getOrderDetailsError);
+
+	if (loading) return <div>Создаём заказ...</div>;
+	if (error) return <div>Произошла непоправимая ошибка :(</div>;
+
 	return (
 		<div className={`pb-10 pt-10 ${styles.container}`}>
-			<p className='text text_type_digits-large'>034536</p>
+			<p className='text text_type_digits-large'>
+				{orderDetails?.order?.number}
+			</p>
 			<p className='pt-8 text text_type_main-medium'>идентификатор заказа</p>
 			<img
 				className='pt-15 pb-15'

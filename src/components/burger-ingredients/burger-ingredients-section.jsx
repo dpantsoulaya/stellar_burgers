@@ -1,11 +1,13 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { IngredientCard } from './ingredient-card';
 import styles from './style.module.css';
 import { IngredientType } from '@utils/types';
 
-export const BurgerIngredientsSection = ({ title, ingredients }) => {
-	return (
-		<section>
+// eslint-disable-next-line react/display-name
+export const BurgerIngredientsSection = React.forwardRef(
+	({ title, ingredients }, ref) => (
+		<section ref={ref}>
 			<h2 className='text text_type_main-medium'>{title}</h2>
 
 			{ingredients && (
@@ -18,8 +20,8 @@ export const BurgerIngredientsSection = ({ title, ingredients }) => {
 				</ul>
 			)}
 		</section>
-	);
-};
+	)
+);
 
 BurgerIngredientsSection.propTypes = {
 	title: PropTypes.string.isRequired,

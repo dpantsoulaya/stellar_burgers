@@ -1,55 +1,183 @@
+import { useSelector, useDispatch } from 'react-redux';
 import {
 	ConstructorElement,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import { Price } from '../price/price';
 import { OrderDetails } from '../order-details/order-details';
 import { useModal } from '../../hooks/useModal';
-import { IngredientType } from '@utils/types';
 import { Modal } from '../modal/modal';
+import { getAllIngredients } from '@services/ingredients/reducer';
+import {
+	addElement,
+	changeBun,
+	getBun,
+	getElements,
+	removeElement,
+} from '@services/constructor/reducer';
+import { DropTarget } from './drop-target';
 import styles from './style.module.css';
+import { makeOrder } from '@services/order/actions';
+import { useCallback, useEffect, useState } from 'react';
+import { DraggableElement } from './draggable-element';
 
-export const BurgerConstructor = ({ elements }) => {
+export const BurgerConstructor = () => {
+	const bun = useSelector(getBun);
+	const elements = useSelector(getElements);
+	const [totalPrice, setTotalPrice] = useState(0);
 	const { isModalOpen, openModal, closeModal } = useModal();
+	const dispatch = useDispatch();
+	const ingredients = useSelector(getAllIngredients);
 
-	return elements.length > 0 ? (
+	useEffect(() => {
+		calculatePrice();
+	}, [bun, elements]);
+
+	const calculatePrice = useCallback(() => {
+		const price =
+			(bun ? 2 * bun.price : 0) +
+			(elements ? elements.reduce((acc, el) => acc + Number(el.price), 0) : 0);
+		setTotalPrice(price);
+	}, [bun, elements]);
+
+	// Бросили булку
+	const handleDropBun = (id) => {
+		const ingredient = ingredients.find((i) => i._id === id);
+		if (ingredient.type !== 'bun') {
+			console.error('Должна быть булка');
+			return;
+		}
+		dispatch(changeBun(ingredient));
+	};
+
+	// Бросили начинку
+	const handleDropElement = (id) => {
+		const ingredient = ingredients.find((i) => i._id === id);
+		dispatch(addElement(ingredient));
+	};
+
+	// Удалили ингредиент
+	const handleRemoveElement = (index) => {
+		dispatch(removeElement(index));
+	};
+
+	// Открытие модального окна с деталями заказа
+	const handleMakeOrder = () => {
+		if (!bun) {
+			alert('Добавьте булку!');
+			return;
+		}
+		if (elements.length === 0) {
+			alert('Ингридиенты добавьте!');
+			return;
+		}
+
+		const elementsIds = elements.map((e) => e._id);
+		const ingredients = [bun._id, ...elementsIds, bun._id];
+		dispatch(makeOrder(ingredients));
+		openModal();
+	};
+
+	return (
 		<>
 			<div>
 				<div className={styles.ingredients_list}>
-					<ConstructorElement
-						type='top'
-						isLocked={true}
-						text='Краторная булка N-200i (верх)'
-						price={200}
-						thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-					/>
+					{!bun && (
+						<DropTarget
+							accept='bun'
+							onDropHandler={handleDropBun}
+							style={{
+								borderRadius: 'var(--top-constructor-item-border-radius)',
+							}}>
+							<div
+								className={`constructor-element constructor-element_pos_top ${styles.no_bun_container}`}>
+								<p>Выберите булки</p>
+							</div>
+						</DropTarget>
+					)}
 
-					{elements.map((element, index) => (
-						<ConstructorElement
-							key={index}
-							text={element.name}
-							price={element.price}
-							thumbnail={element.image}
-						/>
-					))}
+					{bun && (
+						<DropTarget
+							accept='bun'
+							onDropHandler={handleDropBun}
+							style={{
+								borderRadius: 'var(--top-constructor-item-border-radius)',
+							}}>
+							<ConstructorElement
+								type='top'
+								isLocked={true}
+								text={`${bun.name} (верх)`}
+								price={bun.price}
+								thumbnail={bun.image}
+							/>
+						</DropTarget>
+					)}
 
-					<ConstructorElement
-						type='bottom'
-						isLocked={true}
-						text='Краторная булка N-200i (низ)'
-						price={200}
-						thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-					/>
+					{(!elements || elements.length === 0) && (
+						<DropTarget accept='element' onDropHandler={handleDropElement}>
+							<div
+								className={`constructor-element ${styles.no_elements_container}`}>
+								<p>Выберите начинку</p>
+							</div>
+						</DropTarget>
+					)}
+
+					{elements && elements.length > 0 && (
+						<DropTarget accept='element' onDropHandler={handleDropElement}>
+							<div className={styles.elements_container}>
+								{elements.map((element, index) => (
+									<DraggableElement key={index} id={element._id} index={index}>
+										<ConstructorElement
+											text={element.name}
+											price={element.price}
+											thumbnail={element.image}
+											handleClose={() => handleRemoveElement(index)}
+										/>
+									</DraggableElement>
+								))}
+							</div>
+						</DropTarget>
+					)}
+
+					{!bun && (
+						<DropTarget
+							accept='bun'
+							onDropHandler={handleDropBun}
+							style={{
+								borderRadius: 'var(--bottom-constructor-item-border-radius)',
+							}}>
+							<div
+								className={`constructor-element constructor-element_pos_bottom ${styles.no_bun_container}`}>
+								<p>Выберите булки</p>
+							</div>
+						</DropTarget>
+					)}
+
+					{bun && (
+						<DropTarget
+							accept='bun'
+							onDropHandler={handleDropBun}
+							style={{
+								borderRadius: 'var(--bottom-constructor-item-border-radius)',
+							}}>
+							<ConstructorElement
+								type='bottom'
+								isLocked={true}
+								text={`${bun.name} (низ)`}
+								price={bun.price}
+								thumbnail={bun.image}
+							/>
+						</DropTarget>
+					)}
 				</div>
 
 				<div className={styles.place_order_container}>
-					<Price value={610} size='medium' />
+					<Price value={totalPrice} size='medium' />
 					<Button
 						htmlType='button'
 						type='primary'
 						size='large'
-						onClick={openModal}>
+						onClick={handleMakeOrder}>
 						Оформить заказ
 					</Button>
 				</div>
@@ -60,9 +188,5 @@ export const BurgerConstructor = ({ elements }) => {
 				</Modal>
 			)}
 		</>
-	) : null;
-};
-
-BurgerConstructor.propTypes = {
-	elements: PropTypes.arrayOf(IngredientType).isRequired,
+	);
 };

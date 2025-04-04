@@ -1,8 +1,12 @@
+import { useSelector } from 'react-redux';
 import { Characteristic } from './characteristic';
 import { IngredientType } from '@utils/types';
 import styles from './style.module.css';
+import { getCurrentIngredient } from '@services/ingredient-details/reducer';
 
-export const IngredientDetails = ({ ingredient }) => {
+export const IngredientDetails = () => {
+	const ingredient = useSelector(getCurrentIngredient);
+
 	return (
 		<>
 			<img src={ingredient.image_large} alt='ingredient' />
@@ -17,8 +21,4 @@ export const IngredientDetails = ({ ingredient }) => {
 			</div>
 		</>
 	);
-};
-
-IngredientDetails.propTypes = {
-	ingredient: IngredientType,
 };

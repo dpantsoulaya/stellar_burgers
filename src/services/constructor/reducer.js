@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 const initialState = {
 	bun: null,
@@ -20,16 +20,23 @@ export const constructorSlice = createSlice({
 		changeBun: (state, action) => {
 			state.bun = action.payload;
 		},
-		addElement: (state, action) => {
-			state.elements = state.elements
-				? [...state.elements, action.payload]
-				: [action.payload];
+		addElement: {
+			reducer: (state, action) => {
+				state.elements = state.elements
+					? [...state.elements, action.payload]
+					: [action.payload];
+			},
+			prepare: (ingredient) => {
+				const uniqueId = nanoid();
+				return { payload: { ...ingredient, uniqueId } };
+			},
 		},
 		removeElement: (state, action) => {
-			const elements = [...state.elements];
-			elements.splice(action.payload, 1);
-			state.elements = elements;
+			state.elements = [...state.elements].filter(
+				(e) => e.uniqueId !== action.payload
+			);
 		},
+		clearAll: () => initialState,
 		reorderElements: (state, action) => {
 			const { toIndex, fromIndex } = action.payload;
 			const elements = [...state.elements];
@@ -50,6 +57,7 @@ export const {
 	changeBun,
 	addElement,
 	removeElement,
+	clearAll,
 	reorderElements,
 	setDraggingElementIndex,
 	clearDraggingElementIndex,

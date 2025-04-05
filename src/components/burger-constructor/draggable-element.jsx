@@ -98,7 +98,7 @@ export const DraggableElement = ({ id, index, children }) => {
 };
 
 DraggableElement.propTypes = {
-	id: PropTypes.string,
-	index: PropTypes.number,
-	children: PropTypes.node,
+	id: PropTypes.string.isRequired,
+	index: PropTypes.number.isRequired,
+	children: PropTypes.node.isRequired,
 };

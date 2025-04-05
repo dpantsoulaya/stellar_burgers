@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { Characteristic } from './characteristic';
-import { IngredientType } from '@utils/types';
 import styles from './style.module.css';
 import { getCurrentIngredient } from '@services/ingredient-details/reducer';
 

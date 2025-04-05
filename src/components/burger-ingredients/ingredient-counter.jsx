@@ -32,5 +32,5 @@ export const IngredientCounter = ({ ingredientId }) => {
 };
 
 IngredientCounter.propTypes = {
-	ingredientId: PropTypes.string,
+	ingredientId: PropTypes.string.isRequired,
 };

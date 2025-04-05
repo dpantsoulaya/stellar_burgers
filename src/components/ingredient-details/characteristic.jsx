@@ -13,6 +13,6 @@ export const Characteristic = ({ name, value }) => {
 };
 
 Characteristic.propTypes = {
-	name: PropTypes.string,
-	value: PropTypes.number,
+	name: PropTypes.string.isRequired,
+	value: PropTypes.number.isRequired,
 };

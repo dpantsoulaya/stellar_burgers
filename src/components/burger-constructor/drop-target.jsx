@@ -6,7 +6,7 @@ export const DropTarget = ({ accept, children, style, onDropHandler }) => {
 	const [{ isHover }, dropTarget] = useDrop({
 		accept: accept,
 		drop({ id }) {
-			onDropHandler(id);
+			if (onDropHandler) onDropHandler(id);
 		},
 		collect: (monitor) => ({
 			isHover: monitor.isOver(),
@@ -27,8 +27,8 @@ export const DropTarget = ({ accept, children, style, onDropHandler }) => {
 };
 
 DropTarget.propTypes = {
-	accept: PropTypes.string,
-	children: PropTypes.node,
+	accept: PropTypes.string.isRequired,
+	children: PropTypes.node.isRequired,
 	style: PropTypes.any,
 	onDropHandler: PropTypes.func,
 };

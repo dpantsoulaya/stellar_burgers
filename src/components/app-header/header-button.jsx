@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './style.module.css';
 
 export const HeaderButton = ({ icon, text, active }) => {
@@ -12,4 +13,10 @@ export const HeaderButton = ({ icon, text, active }) => {
 			</div>
 		</div>
 	);
+};
+
+HeaderButton.propTypes = {
+	icon: PropTypes.node,
+	text: PropTypes.string.isRequired,
+	active: PropTypes.bool,
 };

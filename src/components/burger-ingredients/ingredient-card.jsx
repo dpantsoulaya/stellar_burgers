@@ -54,5 +54,5 @@ export const IngredientCard = ({ ingredient }) => {
 };
 
 IngredientCard.propTypes = {
-	ingredient: IngredientType,
+	ingredient: IngredientType.isRequired,
 };

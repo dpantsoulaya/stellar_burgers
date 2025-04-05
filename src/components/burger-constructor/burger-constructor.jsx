@@ -57,8 +57,8 @@ export const BurgerConstructor = () => {
 	};
 
 	// Удалили ингредиент
-	const handleRemoveElement = (index) => {
-		dispatch(removeElement(index));
+	const handleRemoveElement = (uniqueId) => {
+		dispatch(removeElement(uniqueId));
 	};
 
 	// Открытие модального окна с деталями заказа
@@ -126,12 +126,15 @@ export const BurgerConstructor = () => {
 						<DropTarget accept='element' onDropHandler={handleDropElement}>
 							<div className={styles.elements_container}>
 								{elements.map((element, index) => (
-									<DraggableElement key={index} id={element._id} index={index}>
+									<DraggableElement
+										key={element.uniqueId}
+										id={element._id}
+										index={index}>
 										<ConstructorElement
 											text={element.name}
 											price={element.price}
 											thumbnail={element.image}
-											handleClose={() => handleRemoveElement(index)}
+											handleClose={() => handleRemoveElement(element.uniqueId)}
 										/>
 									</DraggableElement>
 								))}

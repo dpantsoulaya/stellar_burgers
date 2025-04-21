@@ -19,13 +19,35 @@ const checkSuccess = (res) => {
 	return Promise.reject(`Ответ не success: ${res}`);
 };
 
-// создаем универсальную фукнцию запроса с проверкой ответа и `success`
+// создаем универсальную функцию запроса с проверкой ответа и `success`
 // В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
-const request = (endpoint, options) => {
+export const request = (endpoint, options) => {
 	// а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
 	return fetch(`${BASE_URL}${endpoint}`, options)
 		.then(checkResponse)
 		.then(checkSuccess);
 };
 
-export default request;
+export const patch = (endpoint, data, authorizationToken = '') => {
+	return request(endpoint, {
+		method: 'PATCH',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: authorizationToken,
+		},
+		body: JSON.stringify(data),
+	});
+};
+
+export const postRequest = (endpoint, data, authorizationToken = '') => {
+	return request(endpoint, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: authorizationToken,
+		},
+		body: JSON.stringify(data),
+	});
+};

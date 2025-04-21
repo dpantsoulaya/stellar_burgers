@@ -1,10 +1,13 @@
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Characteristic } from './characteristic';
 import styles from './style.module.css';
-import { getCurrentIngredient } from '@services/ingredient-details/reducer';
+import { getAllIngredients } from '@services/ingredients/reducer';
 
 export const IngredientDetails = () => {
-	const ingredient = useSelector(getCurrentIngredient);
+	const { id } = useParams();
+	const ingredients = useSelector(getAllIngredients);
+	const ingredient = ingredients.find((i) => i._id == id);
 
 	return (
 		<>

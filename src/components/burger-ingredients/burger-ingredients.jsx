@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { BurgerIngredientsSection } from './burger-ingredients-section';
+import BurgerIngredientsSection from './burger-ingredients-section';
 import styles from './style.module.css';
 import { loadIngredients } from '@services/ingredients/actions';
 import {
@@ -9,6 +9,7 @@ import {
 	getIngredientsError,
 	getIngredientsLoading,
 } from '@services/ingredients/reducer';
+import { Loader } from '../loader/loader';
 
 const TAB_BUN = 'bun';
 const TAB_SAUCE = 'sauce';
@@ -30,6 +31,21 @@ export const BurgerIngredients = () => {
 		dispatch(loadIngredients());
 	}, []);
 
+	const buns = useMemo(
+		() => ingredients?.filter((ingredient) => ingredient.type === 'bun'),
+		[ingredients]
+	);
+
+	const sauces = useMemo(
+		() => ingredients?.filter((ingredient) => ingredient.type === 'sauce'),
+		[ingredients]
+	);
+
+	const mains = useMemo(
+		() => ingredients?.filter((ingredient) => ingredient.type === 'main'),
+		[ingredients]
+	);
+
 	const handleScroll = () => {
 		const tabsY = tabsRef.current.getBoundingClientRect().y;
 		const bunY = bunRef.current.getBoundingClientRect().y;
@@ -48,22 +64,48 @@ export const BurgerIngredients = () => {
 		setActiveTab(tabName);
 	};
 
-	if (ingredientsLoading) return <p>Загрузка ингредиентов с сервера</p>;
+	const onTabClick = (tab) => {
+		setActiveTab(tab);
+		let elementRef;
+		switch (tab) {
+			case TAB_BUN:
+				elementRef = bunRef;
+				break;
+			case TAB_MAIN:
+				elementRef = mainRef;
+				break;
+			case TAB_SAUCE:
+				elementRef = sauceRef;
+				break;
+		}
+		if (elementRef) elementRef.current.scrollIntoView({ behavior: 'smooth' });
+	};
+
+	if (ingredientsLoading) return <Loader />;
 	if (ingredientsError) return <p>Произошла непоправимая ошибка</p>;
 
 	return ingredients && ingredients.length > 0 ? (
 		<div>
 			<h1 className='text text_type_main-large'>Соберите бургер</h1>
 			<div ref={tabsRef} className={styles.tab_container}>
-				<Tab value='Булки' active={activeTab === TAB_BUN}>
+				<Tab
+					value='Булки'
+					active={activeTab === TAB_BUN}
+					onClick={() => onTabClick(TAB_BUN)}>
 					Булки
 				</Tab>
 
-				<Tab value='Соусы' active={activeTab === TAB_SAUCE}>
+				<Tab
+					value='Соусы'
+					active={activeTab === TAB_SAUCE}
+					onClick={() => onTabClick(TAB_SAUCE)}>
 					Соусы
 				</Tab>
 
-				<Tab value='Начинки' active={activeTab === TAB_MAIN}>
+				<Tab
+					value='Начинки'
+					active={activeTab === TAB_MAIN}
+					onClick={() => onTabClick(TAB_MAIN)}>
 					Начинки
 				</Tab>
 			</div>
@@ -72,25 +114,19 @@ export const BurgerIngredients = () => {
 				<BurgerIngredientsSection
 					ref={bunRef}
 					title='Булки'
-					ingredients={ingredients.filter(
-						(ingredient) => ingredient.type === 'bun'
-					)}
+					ingredients={buns}
 				/>
 
 				<BurgerIngredientsSection
 					ref={sauceRef}
 					title='Соусы'
-					ingredients={ingredients.filter(
-						(ingredient) => ingredient.type === 'sauce'
-					)}
+					ingredients={sauces}
 				/>
 
 				<BurgerIngredientsSection
 					ref={mainRef}
 					title='Начинки'
-					ingredients={ingredients.filter(
-						(ingredient) => ingredient.type === 'main'
-					)}
+					ingredients={mains}
 				/>
 			</div>
 		</div>

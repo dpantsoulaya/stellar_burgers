@@ -5,14 +5,21 @@ import {
 	getOrderDetailsError,
 	getOrderDetailsLoading,
 } from '@services/order/reducer';
+import { Loader } from '../loader/loader';
 
 export const OrderDetails = () => {
 	const orderDetails = useSelector(getOrderDetails);
-	const { loading } = useSelector(getOrderDetailsLoading);
-	const { error } = useSelector(getOrderDetailsError);
+	const loading = useSelector(getOrderDetailsLoading);
+	const error = useSelector(getOrderDetailsError);
 
-	if (loading) return <div>Создаём заказ...</div>;
-	if (error) return <div>Произошла непоправимая ошибка :(</div>;
+	if (loading)
+		return (
+			<div className={`pb-10 pt-10 ${styles.container}`}>
+				<Loader />
+			</div>
+		);
+
+	if (error) return <div>Произошла ошибка</div>;
 
 	return (
 		<div className={`pb-10 pt-10 ${styles.container}`}>

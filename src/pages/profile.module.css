@@ -1,0 +1,35 @@
+.container {
+	display: flex;
+	flex-direction: row;
+}
+
+.menu_container {
+	flex: 1;
+}
+
+.menu {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.menu li {
+	height: 60px;
+}
+
+.active_link {
+	color: white;
+}
+
+.default_link {
+	color: var(--text-inactive-color);
+}
+
+.logout_button {
+	padding: 0;
+	background-color: transparent;
+	color: var(--text-inactive-color);
+}
+
+.content_container {
+	flex: 2;
+}

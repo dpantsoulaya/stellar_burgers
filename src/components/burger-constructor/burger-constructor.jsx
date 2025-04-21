@@ -1,4 +1,6 @@
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
 	ConstructorElement,
 	Button,
@@ -16,18 +18,21 @@ import {
 	removeElement,
 } from '@services/constructor/reducer';
 import { DropTarget } from './drop-target';
-import styles from './style.module.css';
 import { makeOrder } from '@services/order/actions';
-import { useCallback, useEffect, useState } from 'react';
 import { DraggableElement } from './draggable-element';
+import { getUser } from '@services/user/reducer';
+import styles from './style.module.css';
 
 export const BurgerConstructor = () => {
+	const user = useSelector(getUser);
 	const bun = useSelector(getBun);
 	const elements = useSelector(getElements);
 	const [totalPrice, setTotalPrice] = useState(0);
 	const { isModalOpen, openModal, closeModal } = useModal();
 	const dispatch = useDispatch();
 	const ingredients = useSelector(getAllIngredients);
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	useEffect(() => {
 		calculatePrice();
@@ -63,6 +68,12 @@ export const BurgerConstructor = () => {
 
 	// Открытие модального окна с деталями заказа
 	const handleMakeOrder = () => {
+		// Если пользователь неавторизован, то перенаправлять его на страницу логина
+		if (!user) {
+			navigate('/login', { from: location });
+			return;
+		}
+
 		if (!bun) {
 			alert('Добавьте булку!');
 			return;

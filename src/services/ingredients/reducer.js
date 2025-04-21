@@ -42,5 +42,3 @@ export const {
 	getIngredientsLoading,
 	getCurrentIngredient,
 } = ingredientsSlice.selectors;
-
-export default ingredientsSlice.reducer;

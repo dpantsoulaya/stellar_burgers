@@ -35,5 +35,3 @@ export const orderSlice = createSlice({
 
 export const { getOrderDetails, getOrderDetailsLoading, getOrderDetailsError } =
 	orderSlice.selectors;
-
-export default orderSlice.reducer;

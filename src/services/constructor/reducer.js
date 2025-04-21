@@ -64,5 +64,3 @@ export const {
 } = constructorSlice.actions;
 export const { getBun, getElements, getDraggingElementIndex } =
 	constructorSlice.selectors;
-
-export default constructorSlice.reducer;

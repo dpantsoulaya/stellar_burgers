@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { ModalOverlay } from './modal-overlay';
 import { ModalHeader } from './modal-header';
 import styles from './style.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const modalRoot = document.getElementById('react-modals');
 
-export const Modal = ({ children, title, onClose }) => {
+export const Modal = ({ children, title }) => {
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		const handleEscPress = (event) => {
 			if (event.key === 'Escape') {
@@ -21,6 +24,11 @@ export const Modal = ({ children, title, onClose }) => {
 			document.removeEventListener('keydown', handleEscPress);
 		};
 	}, [onClose]);
+
+	// Закрытие модального окна - идём назад в истории
+	const onClose = useCallback(() => {
+		navigate(-1);
+	}, []);
 
 	return ReactDOM.createPortal(
 		<>
@@ -37,5 +45,4 @@ export const Modal = ({ children, title, onClose }) => {
 Modal.propTypes = {
 	children: PropTypes.node.isRequired,
 	title: PropTypes.string,
-	onClose: PropTypes.func.isRequired,
 };

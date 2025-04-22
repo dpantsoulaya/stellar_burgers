@@ -7,37 +7,36 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { postPasswordResetReset } from '@utils/api';
 import { FORGOT_PASSWORD_FLAG } from './forgot-password';
-import { Error } from '../components/error/error';
-import styles from './registration.module.css';
+import { Routes } from '../../routes';
+import { Error } from '../../components/error/error';
+import styles from './auth.module.css';
+import useForm from '../../hooks/useForm';
 
 export const ResetPassword = () => {
-	const [password, setPassword] = useState('');
-	const [token, setToken] = useState('');
+	const [data, onChange] = useForm({ password: '', token: '' });
 	const [error, setError] = useState();
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		const forgotPasswordFlag = localStorage.getItem(FORGOT_PASSWORD_FLAG);
-		console.log('forgotPasswordFlag', forgotPasswordFlag);
-
 		if (!forgotPasswordFlag) {
-			navigate('/forgot_password');
+			navigate(Routes.FORGOT_PASSWORD);
 		}
 	}, []);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if (!password || !token) {
+		if (!data.password || !data.token) {
 			setError('Введите пароль и токен');
 			return;
 		}
-		postPasswordResetReset(password, token).then(() => {
+		postPasswordResetReset(data.password, data.token).then(() => {
 			// Удалить флаг
 			localStorage.removeItem(FORGOT_PASSWORD_FLAG);
 
 			// перенаправление на страницу входа
-			navigate('/login');
+			navigate(Routes.LOGIN);
 		});
 	};
 
@@ -51,16 +50,19 @@ export const ResetPassword = () => {
 				<form className={`${styles.form} mb-20`} onSubmit={handleSubmit}>
 					<PasswordInput
 						name='password'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						value={data.password}
+						onChange={onChange}
 						placeholder='Введите новый пароль'
+						autoComplete='new-password'
 					/>
 
 					<Input
+						name='token'
 						type='text'
-						value={token}
-						onChange={(e) => setToken(e.target.value)}
+						value={data.token}
+						onChange={onChange}
 						placeholder='Введите код из письма'
+						autoComplete='off'
 					/>
 
 					<Button htmlType='submit' type='primary' size='large'>
@@ -70,7 +72,7 @@ export const ResetPassword = () => {
 
 				<div>
 					<p className='text text_type_main-default text_color_inactive'>
-						Вспомнили пароль? <Link to='/login'>Войти</Link>
+						Вспомнили пароль? <Link to={Routes.LOGIN}>Войти</Link>
 					</p>
 				</div>
 			</div>

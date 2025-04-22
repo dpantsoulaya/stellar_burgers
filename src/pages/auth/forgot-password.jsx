@@ -5,20 +5,22 @@ import {
 	EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { postPasswordReset } from '@utils/api';
-import { Error } from '../components/error/error';
-import styles from './registration.module.css';
+import { Routes } from '../../routes';
+import { Error } from '../../components/error/error';
+import styles from './auth.module.css';
+import useForm from '../../hooks/useForm';
 
 export const FORGOT_PASSWORD_FLAG = 'resetPassword';
 
 export const ForgotPassword = () => {
-	const [email, setEmail] = useState('');
+	const [data, onChange] = useForm({ email: '' });
 	const [error, setError] = useState();
 	const navigate = useNavigate();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if (!email) {
+		if (!data.email) {
 			setError('Введите email');
 			return;
 		}
@@ -28,7 +30,7 @@ export const ForgotPassword = () => {
 			localStorage.setItem(FORGOT_PASSWORD_FLAG, true);
 
 			// Пользователь направляется на маршрут /reset-password
-			navigate('/reset_password');
+			navigate(Routes.RESET_PASSWORD);
 		});
 	};
 
@@ -42,10 +44,11 @@ export const ForgotPassword = () => {
 				<form className={`${styles.form} mb-20`} onSubmit={handleSubmit}>
 					<EmailInput
 						name='email'
-						value={email || ''}
-						onChange={(e) => setEmail(e.target.value)}
+						value={data.email}
+						onChange={onChange}
 						placeholder='Укажите e-mail'
 						isIcon={false}
+						autoComplete='email'
 					/>
 
 					<Button htmlType='submit' type='primary' size='large'>
@@ -55,7 +58,7 @@ export const ForgotPassword = () => {
 
 				<div>
 					<p className='text text_type_main-default text_color_inactive'>
-						Вспомнили пароль? <Link to='/login'>Войти</Link>
+						Вспомнили пароль? <Link to={Routes.LOGIN}>Войти</Link>
 					</p>
 				</div>
 			</div>

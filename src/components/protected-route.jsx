@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { getIsAuthChecked, getUser } from '@services/user/reducer';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Loader } from './loader/loader';
+import { Routes } from '../routes';
 
 export const ProtectedRoute = ({ onlyUnAuth = false, component }) => {
 	const user = useSelector(getUser);
@@ -23,7 +24,7 @@ export const ProtectedRoute = ({ onlyUnAuth = false, component }) => {
 	// Если пользователь должен быть авторизован, а он не авторизован,
 	//  то перенаправляем на страницу логина и запоминаем, откуда он пришёл
 	if (!onlyUnAuth && !user) {
-		return <Navigate to='/login' state={{ from: location }} />;
+		return <Navigate to={Routes.LOGIN} state={{ from: location }} />;
 	}
 
 	return component;

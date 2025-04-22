@@ -21,6 +21,7 @@ import { DropTarget } from './drop-target';
 import { makeOrder } from '@services/order/actions';
 import { DraggableElement } from './draggable-element';
 import { getUser } from '@services/user/reducer';
+import { Routes } from '../../routes';
 import styles from './style.module.css';
 
 export const BurgerConstructor = () => {
@@ -70,7 +71,7 @@ export const BurgerConstructor = () => {
 	const handleMakeOrder = () => {
 		// Если пользователь неавторизован, то перенаправлять его на страницу логина
 		if (!user) {
-			navigate('/login', { from: location });
+			navigate(Routes.LOGIN, { from: location });
 			return;
 		}
 

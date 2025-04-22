@@ -6,7 +6,7 @@ import {
 	getIngredientsError,
 } from '@services/ingredients/reducer';
 import { loadIngredients } from '@services/ingredients/actions';
-import { IngredientDetails } from '../components/ingredient-details/ingredient-details';
+import { IngredientDetails } from '../../components/ingredient-details/ingredient-details';
 import styles from './ingredient.module.css';
 
 export const Ingredient = () => {

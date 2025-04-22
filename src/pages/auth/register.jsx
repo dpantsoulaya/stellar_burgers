@@ -5,18 +5,15 @@ import {
 	PasswordInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './registration.module.css';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from '@services/user/action';
+import { Routes } from '../../routes';
+import styles from './auth.module.css';
+import useForm from '../../hooks/useForm';
 
 export const Register = () => {
-	const [data, setData] = useState({ name: '', email: '', password: '' });
+	const [data, onChange] = useForm({ name: '', email: '', password: '' });
 	const dispatch = useDispatch();
-
-	const onChange = (e) => {
-		setData({ ...data, [e.target.name]: e.target.value });
-	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -29,25 +26,28 @@ export const Register = () => {
 				<p className='text text_type_main-medium mb-6'>Регистрация</p>
 				<form className={`${styles.form} mb-20`} onSubmit={handleSubmit}>
 					<Input
-						type='text'
-						value={data['name']}
-						onChange={onChange}
 						name='name'
+						type='text'
+						value={data.name}
+						onChange={onChange}
 						placeholder='Имя'
+						autoComplete='name'
 					/>
 
 					<EmailInput
 						name='email'
-						value={data['email']}
+						value={data.email}
 						onChange={onChange}
 						placeholder='E-mail'
 						isIcon={false}
+						autoComplete='email'
 					/>
 
 					<PasswordInput
 						name='password'
-						value={data['password']}
+						value={data.password}
 						onChange={onChange}
+						autoComplete='new-password'
 					/>
 
 					<Button htmlType='submit' type='primary' size='large'>
@@ -57,7 +57,7 @@ export const Register = () => {
 
 				<div>
 					<p className='text text_type_main-default text_color_inactive'>
-						Уже зарегистрированы? <Link to='/login'>Войти</Link>
+						Уже зарегистрированы? <Link to={Routes.LOGIN}>Войти</Link>
 					</p>
 				</div>
 			</div>

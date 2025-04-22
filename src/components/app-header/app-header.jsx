@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import {
 	BurgerIcon,
 	ListIcon,
@@ -5,8 +6,8 @@ import {
 	ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { HeaderButton } from './header-button';
+import { Routes } from '../../routes';
 import styles from './style.module.css';
-import { useLocation } from 'react-router-dom';
 
 export const AppHeader = () => {
 	const location = useLocation();
@@ -18,12 +19,14 @@ export const AppHeader = () => {
 					<HeaderButton
 						icon={
 							<BurgerIcon
-								type={location.pathname === '/' ? 'primary' : 'secondary'}
+								type={
+									location.pathname === Routes.HOME ? 'primary' : 'secondary'
+								}
 							/>
 						}
 						text='Конструктор'
-						link='/'
-						active={location.pathname === '/'}
+						link={Routes.HOME}
+						active={location.pathname === Routes.HOME}
 					/>
 
 					<HeaderButton
@@ -41,15 +44,15 @@ export const AppHeader = () => {
 						icon={
 							<ProfileIcon
 								type={
-									location.pathname.startsWith('/profile')
+									location.pathname.startsWith(Routes.PROFILE)
 										? 'primary'
 										: 'secondary'
 								}
 							/>
 						}
 						text='Личный кабинет'
-						link='/profile/edit'
-						active={location.pathname.startsWith('/profile')}
+						link={Routes.EDIT_PROFILE}
+						active={location.pathname.startsWith(Routes.PROFILE)}
 					/>
 				</div>
 			</nav>

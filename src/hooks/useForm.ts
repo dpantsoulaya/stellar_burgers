@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from 'react';
 
-function useForm<T extends { [key: string]: string }>(baseForm: T) {
+function useForm<T extends { [key: string]: string }>(
+	baseForm: T
+): [T, (e: ChangeEvent<HTMLInputElement>) => void] {
 	const [form, setForm] = useState<T>(baseForm);
 
 	function handleChange(e: ChangeEvent<HTMLInputElement>) {

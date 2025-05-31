@@ -1,0 +1,35 @@
+.container {
+	display: flex;
+	flex-direction: row;
+}
+
+.image_container {
+	width: 64px;
+	height: 64px;
+	align-content: center;
+	margin-left: -16px;
+	border-radius: 38px;
+	background: linear-gradient(var(--background-alt) 0 0) padding-box,
+		linear-gradient(to right, #801ab2, #4c4cff) border-box;
+	border: 3px solid transparent;
+}
+
+.image_container img {
+	width: 112px;
+	translate: -22px;
+}
+
+.more_image_container {
+	text-align: center;
+	position: relative;
+}
+
+.more_image_container img {
+	filter: brightness(0.5);
+}
+
+.more_label {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+}

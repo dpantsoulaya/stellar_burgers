@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '@services/store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
 	ConstructorElement,
@@ -9,29 +9,26 @@ import { Price } from '../price/price';
 import { OrderDetails } from '../order-details/order-details';
 import { useModal } from '../../hooks/useModal';
 import { Modal } from '../modal/modal';
-import { getAllIngredients } from '@services/ingredients/reducer';
+import { getAllIngredients } from '@services/ingredients/slice';
 import {
 	addElement,
 	changeBun,
 	getBun,
 	getElements,
 	removeElement,
-} from '@services/constructor/reducer';
+} from '@services/burger-constructor/slice';
 import { DropTarget } from './drop-target';
 import { makeOrder } from '@services/order/actions';
 import { DraggableElement } from './draggable-element';
-import { getUser } from '@services/user/reducer';
+import { getUser } from '@services/user/slice';
 import { Routes } from '../../routes';
-import { Ingredient } from '@utils/types';
 import styles from './style.module.css';
 
 export const BurgerConstructor = (): React.JSX.Element => {
 	const user = useSelector(getUser);
-	const bun = useSelector<unknown, Ingredient>(getBun);
-	const elements = useSelector<unknown, (Ingredient & { uniqueId: string })[]>(
-		getElements
-	);
-	const ingredients = useSelector<unknown, Ingredient[]>(getAllIngredients);
+	const bun = useSelector(getBun);
+	const elements = useSelector(getElements);
+	const ingredients = useSelector(getAllIngredients);
 	const [totalPrice, setTotalPrice] = useState(0);
 	const { isModalOpen, openModal } = useModal();
 	const dispatch = useDispatch();
@@ -85,7 +82,6 @@ export const BurgerConstructor = (): React.JSX.Element => {
 	const handleMakeOrder = () => {
 		// Если пользователь неавторизован, то перенаправлять его на страницу логина
 		if (!user) {
-			// TODO: проверить, что так работает
 			navigate(Routes.LOGIN, { state: { from: location } });
 			return;
 		}
@@ -94,6 +90,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 			alert('Добавьте булку!');
 			return;
 		}
+
 		if (elements.length === 0) {
 			alert('Ингридиенты добавьте!');
 			return;
@@ -101,7 +98,6 @@ export const BurgerConstructor = (): React.JSX.Element => {
 
 		const elementsIds = elements.map((e) => e._id);
 		const ingredients = [bun._id, ...elementsIds, bun._id];
-		// @ts-expect-error sprint-4
 		dispatch(makeOrder(ingredients));
 		openModal();
 	};

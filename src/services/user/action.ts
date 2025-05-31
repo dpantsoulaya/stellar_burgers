@@ -7,12 +7,13 @@ import {
 	getUser,
 } from '@utils/api';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setIsAuthChecked, setUser } from './reducer';
+import { setIsAuthChecked, setUser } from './slice';
+import { LoginData, UserWithPassword } from '@utils/types';
 
 // Регистрация пользователя
 export const register = createAsyncThunk(
 	'user/register',
-	async ({ name, email, password }) => {
+	async ({ name, email, password }: UserWithPassword) => {
 		const res = await registerApi(name, email, password);
 		return res.user;
 	}
@@ -21,7 +22,7 @@ export const register = createAsyncThunk(
 // Вход пользователя
 export const login = createAsyncThunk(
 	'user/login',
-	async ({ email, password }) => {
+	async ({ email, password }: LoginData) => {
 		const res = await loginApi(email, password);
 		return res.user;
 	}
@@ -35,7 +36,7 @@ export const logout = createAsyncThunk('user/logout', async () => {
 // Обновление данных пользователя
 export const patchUser = createAsyncThunk(
 	'user/patchUser',
-	async ({ email, name, password }) => {
+	async ({ email, name, password }: UserWithPassword) => {
 		const res = await patchUserApi(email, name, password);
 		return res.user;
 	}

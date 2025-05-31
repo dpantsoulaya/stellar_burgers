@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { getIsAuthChecked, getUser } from '@services/user/reducer';
+import { useSelector } from '@services/store';
+import { getIsAuthChecked, getUser } from '@services/user/slice';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Loader } from './loader/loader';
 import { Routes } from '../routes';

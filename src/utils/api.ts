@@ -4,7 +4,9 @@ import {
 	Ingredient,
 	IngredientsResponse,
 	MessageResponse,
+	Order,
 	OrderResponse,
+	OrdersResponse,
 	TokenAndPassword,
 	TokenData,
 	TokensData,
@@ -13,8 +15,8 @@ import {
 	UserWithPassword,
 } from './types';
 
-const LOCAL_STORAGE_ACCESS_TOKEN = 'accessToken';
-const LOCAL_STORAGE_REFRESH_TOKEN = 'refreshToken';
+export const LOCAL_STORAGE_ACCESS_TOKEN = 'accessToken';
+export const LOCAL_STORAGE_REFRESH_TOKEN = 'refreshToken';
 
 const ERROR_JWT_EXPIRED = 'jwt expired';
 
@@ -140,16 +142,15 @@ export const logout = () => {
 };
 
 // Получение данных пользователя
-export const getUser = (): Promise<UserData> => {
-	return getWithAuth<UserResponse>('auth/user')
-		.then((data) => {
-			return data.user;
-		})
-		.catch((err) => {
-			localStorage.removeItem(LOCAL_STORAGE_ACCESS_TOKEN);
-			localStorage.removeItem(LOCAL_STORAGE_REFRESH_TOKEN);
-			throw err;
-		});
+export const getUser = async (): Promise<UserData> => {
+	try {
+		const data = await getWithAuth<UserResponse>('auth/user');
+		return data.user;
+	} catch (err) {
+		localStorage.removeItem(LOCAL_STORAGE_ACCESS_TOKEN);
+		localStorage.removeItem(LOCAL_STORAGE_REFRESH_TOKEN);
+		throw err;
+	}
 };
 
 // Обновление данных пользователя
@@ -189,3 +190,9 @@ export const postOrder = (ingredients: string[]): Promise<OrderResponse> =>
 	postWithAuth<OrderResponse, { ingredients: string[] }>('orders', {
 		ingredients,
 	});
+
+// Получить заказ с сервера по его номеру
+export const getOrder = (number: number): Promise<Order> =>
+	getWithAuth<OrdersResponse>(`orders/${number}`).then(
+		(data) => data.orders[0]
+	);

@@ -2,32 +2,30 @@ import {
 	Button,
 	Input,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { getUser } from '@services/user/reducer';
+import { useSelector, useDispatch } from '@services/store';
+import { getUser } from '@services/user/slice';
 import { patchUser } from '@services/user/action';
 import useForm from '../../hooks/useForm';
-import { UserData, UserWithPassword } from '@utils/types';
+import { UserWithPassword } from '@utils/types';
 import styles from './profile-edit.module.css';
 
 export const ProfileEdit = (): React.JSX.Element => {
-	//@ts-expect-error sprint-4
-	const user = useSelector<unknown, UserData>(getUser);
+	const user = useSelector(getUser);
 	const [data, onChange] = useForm<UserWithPassword>({
-		name: user.name,
-		email: user.email,
+		name: user?.name ?? '',
+		email: user?.email ?? '',
 		password: '',
 	});
 	const dispatch = useDispatch();
 
 	// Пользователь отредактировал какое-то поле
 	const edited =
-		data.name !== user.name ||
-		data.email !== user.email ||
+		data.name !== user?.name ||
+		data.email !== user?.email ||
 		data.password !== '';
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		//@ts-expect-error sprint-4
 		dispatch(patchUser(data));
 	};
 

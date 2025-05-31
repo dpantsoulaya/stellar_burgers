@@ -1,0 +1,4 @@
+.orders_container {
+	max-height: 600px;
+	display: flex;
+}

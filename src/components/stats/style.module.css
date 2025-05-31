@@ -1,0 +1,19 @@
+.container {
+}
+
+.in_progress_container {
+	display: flex;
+	flex-direction: row;
+}
+
+.in_progress_list {
+	list-style-type: none;
+	padding: 0;
+	columns: 2;
+	-webkit-columns: 2;
+	-moz-columns: 2;
+}
+
+.order_done {
+	color: #00cccc;
+}

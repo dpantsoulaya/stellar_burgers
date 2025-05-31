@@ -1,7 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { register, login, logout, patchUser } from './action';
+import { UserData } from '@utils/types';
 
-const initialState = {
+export type TUserState = {
+	user: UserData | null;
+	isAuthChecked: boolean;
+	loading: boolean;
+	error: boolean;
+	errorMessage: string;
+};
+
+const initialState: TUserState = {
 	user: null,
 	isAuthChecked: false,
 	loading: false,
@@ -9,11 +18,11 @@ const initialState = {
 	errorMessage: '',
 };
 
-function isRejectedAction(action) {
+function isRejectedAction(action: PayloadAction) {
 	return action.type.endsWith('rejected');
 }
 
-function isPendingAction(action) {
+function isPendingAction(action: PayloadAction) {
 	return action.type.endsWith('pending');
 }
 
@@ -28,10 +37,10 @@ export const userSlice = createSlice({
 		getErrorMessage: (state) => state.errorMessage,
 	},
 	reducers: {
-		setUser: (state, action) => {
+		setUser: (state, action: PayloadAction<UserData>) => {
 			state.user = action.payload;
 		},
-		setIsAuthChecked: (state, action) => {
+		setIsAuthChecked: (state, action: PayloadAction<boolean>) => {
 			state.isAuthChecked = action.payload;
 		},
 	},
@@ -57,11 +66,14 @@ export const userSlice = createSlice({
 				state.loading = true;
 				state.error = false;
 			})
-			.addMatcher(isRejectedAction, (state, action) => {
-				state.loading = false;
-				state.error = true;
-				state.errorMessage = action.error?.message ?? 'Ошибка';
-			});
+			.addMatcher(
+				isRejectedAction,
+				(state, action: { error: { message?: string } }) => {
+					state.loading = false;
+					state.error = true;
+					state.errorMessage = action.error?.message ?? 'Ошибка';
+				}
+			);
 	},
 });
 

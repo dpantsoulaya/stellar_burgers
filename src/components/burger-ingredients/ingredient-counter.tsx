@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '@services/store';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getBun, getElements } from '@services/constructor/reducer';
+import { getBun, getElements } from '@services/burger-constructor/slice';
 import styles from './style.module.css';
-import { Ingredient } from '@utils/types';
 
 type IngredientCounterProps = {
 	ingredientId: string;
@@ -13,8 +12,8 @@ export const IngredientCounter = ({
 	ingredientId,
 }: IngredientCounterProps): React.JSX.Element | null => {
 	const [count, setCount] = useState(0);
-	const elements = useSelector<unknown, Ingredient[]>(getElements);
-	const bun = useSelector<unknown, Ingredient>(getBun);
+	const elements = useSelector(getElements);
+	const bun = useSelector(getBun);
 
 	useEffect(() => {
 		calcTotalNumber();

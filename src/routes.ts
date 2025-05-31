@@ -7,6 +7,9 @@ export const Routes = {
 	PROFILE: '/profile',
 	EDIT_PROFILE: '/profile/edit',
 	ORDERS: '/profile/orders',
+	PROFILE_ORDER_INFO: '/profile/orders/:number',
 	INGREDIENT: '/ingredients/:id',
+	FEED: '/feed',
+	FEED_ORDER_INFO: '/feed/:number',
 	NOT_FOUND: '*',
 };

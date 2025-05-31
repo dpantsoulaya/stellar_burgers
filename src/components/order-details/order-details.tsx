@@ -1,17 +1,16 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '@services/store';
 import {
 	getOrderDetails,
-	getOrderDetailsError,
-	getOrderDetailsLoading,
-} from '@services/order/reducer';
+	getOrderError,
+	getOrderLoading,
+} from '@services/order/slice';
 import { Loader } from '../loader/loader';
 import styles from './style.module.css';
-import { OrderDetails as TOrderDetails } from '@utils/types';
 
 export const OrderDetails = (): React.JSX.Element => {
-	const orderDetails = useSelector<unknown, TOrderDetails>(getOrderDetails);
-	const loading = useSelector(getOrderDetailsLoading);
-	const error = useSelector(getOrderDetailsError);
+	const orderDetails = useSelector(getOrderDetails);
+	const loading = useSelector(getOrderLoading);
+	const error = useSelector(getOrderError);
 
 	if (loading)
 		return (

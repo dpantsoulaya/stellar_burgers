@@ -4,9 +4,9 @@ import {
 	PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@services/store';
 import { login } from '@services/user/action';
-import { getError, getErrorMessage } from '@services/user/reducer';
+import { getError, getErrorMessage } from '@services/user/slice';
 import useForm from '../../hooks/useForm';
 import { UserWithPassword } from '@utils/types';
 import styles from './auth.module.css';
@@ -21,7 +21,6 @@ export const Login = (): React.JSX.Element => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		//@ts-expect-error sprint-4
 		dispatch(login(data));
 	};
 

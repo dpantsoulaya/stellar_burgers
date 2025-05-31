@@ -27,7 +27,7 @@ const checkSuccess = <TData>(res?: TData): TData | Promise<never> => {
 };
 
 // создаем универсальную функцию запроса с проверкой ответа и `success`
-// В вызов приходит `endpoint`(часть урла, которая идет после базового) и опции
+// В вызов приходит `endpoint`(часть url, которая идет после базового) и опции
 export const request = <TReturn>(
 	endpoint: string,
 	options?: RequestInit,

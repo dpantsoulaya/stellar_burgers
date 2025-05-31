@@ -1,0 +1,11 @@
+.container {
+	display: flex;
+	justify-content: center;
+}
+
+.inner_container {
+	width: 650px;
+	padding: 20px;
+	border-radius: 20px;
+	background-color: var(--background-element);
+}

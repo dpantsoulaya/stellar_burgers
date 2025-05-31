@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@services/store';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import {
 	clearDraggingElementIndex,
 	getDraggingElementIndex,
 	reorderElements,
 	setDraggingElementIndex,
-} from '@services/constructor/reducer';
+} from '@services/burger-constructor/slice';
 import styles from './style.module.css';
 
 type DraggableElementProps = {
@@ -83,7 +83,6 @@ export const DraggableElement = ({
 			return { id, index };
 		},
 		end: () => {
-			// @ts-expect-error sprint-4
 			dispatch(clearDraggingElementIndex());
 		},
 		collect: (monitor) => ({

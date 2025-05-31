@@ -1,5 +1,5 @@
 import { Link, Outlet, useMatch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '@services/store';
 import { logout } from '@services/user/action';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
@@ -11,7 +11,6 @@ export const Profile = (): React.JSX.Element => {
 	const isProfileOrders = useMatch('/profile/orders');
 
 	const handleLogout = () => {
-		//@ts-expect-error sprint-4
 		dispatch(logout());
 	};
 

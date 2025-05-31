@@ -6,7 +6,7 @@ import {
 	PasswordInput,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '@services/store';
 import { register } from '@services/user/action';
 import { Routes } from '../../routes';
 import useForm from '../../hooks/useForm';
@@ -23,7 +23,6 @@ export const Register = (): React.JSX.Element => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		//@ts-expect-error sprint-4
 		dispatch(register(data));
 	};
 

@@ -1,16 +1,15 @@
 import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@services/store';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredientsSection from './burger-ingredients-section';
-import styles from './style.module.css';
 import { loadIngredients } from '@services/ingredients/actions';
 import {
 	getAllIngredients,
 	getIngredientsError,
 	getIngredientsLoading,
-} from '@services/ingredients/reducer';
+} from '@services/ingredients/slice';
 import { Loader } from '../loader/loader';
-import { Ingredient } from '@utils/types';
+import styles from './style.module.css';
 
 enum TabName {
 	BUN = 'bun',
@@ -21,7 +20,7 @@ enum TabName {
 export const BurgerIngredients = (): React.JSX.Element => {
 	const [activeTab, setActiveTab] = useState('bun');
 	const dispatch = useDispatch();
-	const ingredients = useSelector<unknown, Ingredient[]>(getAllIngredients);
+	const ingredients = useSelector(getAllIngredients);
 	const ingredientsLoading = useSelector(getIngredientsLoading);
 	const ingredientsError = useSelector(getIngredientsError);
 
@@ -31,7 +30,6 @@ export const BurgerIngredients = (): React.JSX.Element => {
 	const mainRef = useRef<HTMLElement>(null);
 
 	useEffect(() => {
-		// @ts-expect-error sprint-4
 		dispatch(loadIngredients());
 	}, []);
 

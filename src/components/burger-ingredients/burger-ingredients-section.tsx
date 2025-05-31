@@ -26,7 +26,8 @@ const BurgerIngredientsSection = React.forwardRef<
 						<li key={ingredient._id}>
 							<Link
 								to={`/ingredients/${ingredient._id}`}
-								state={{ backgroundLocation: location }}>
+								state={{ backgroundLocation: location }}
+								className={styles.link}>
 								<IngredientCard ingredient={ingredient} />
 							</Link>
 						</li>

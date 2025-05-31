@@ -1,0 +1,22 @@
+.container {
+	background-color: var(--background-element);
+	border-radius: 40px;
+	margin-bottom: 16px;
+}
+
+.date {
+	margin-left: auto;
+}
+
+.order_id {
+	display: flex;
+	flex-direction: row;
+}
+
+.images_and_price {
+	display: flex;
+}
+
+.images_container {
+	flex-grow: 1;
+}

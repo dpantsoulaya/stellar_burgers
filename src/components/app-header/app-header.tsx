@@ -31,9 +31,16 @@ export const AppHeader = (): React.JSX.Element => {
 					/>
 
 					<HeaderButton
-						icon={<ListIcon type='secondary' />}
-						link=''
+						icon={
+							<ListIcon
+								type={
+									location.pathname === Routes.FEED ? 'primary' : 'secondary'
+								}
+							/>
+						}
 						text='Лента заказов'
+						link={Routes.FEED}
+						active={location.pathname === Routes.FEED}
 					/>
 				</ul>
 

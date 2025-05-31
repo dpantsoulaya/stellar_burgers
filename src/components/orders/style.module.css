@@ -1,0 +1,13 @@
+.container {
+	padding: 16px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.orders_list {
+	list-style: none;
+}
+
+.link {
+	color: white;
+}

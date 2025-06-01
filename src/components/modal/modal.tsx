@@ -10,15 +10,20 @@ const modalRoot = document.getElementById('react-modals');
 type ModalProps = {
 	children: React.ReactNode;
 	title?: string;
+	onClose: () => void;
 };
 
-export const Modal = ({ children, title }: ModalProps): React.ReactPortal => {
-	const navigate = useNavigate();
+export const Modal = ({
+	children,
+	title,
+	onClose,
+}: ModalProps): React.ReactPortal => {
+	//const navigate = useNavigate();
 
-	// Закрытие модального окна - идём назад в истории
-	const onClose = useCallback(() => {
-		navigate(-1);
-	}, []);
+	// // Закрытие модального окна - идём назад в истории
+	// const onClose = useCallback(() => {
+	// 	navigate(-1);
+	// }, []);
 
 	useEffect(() => {
 		const handleEscPress = (event: KeyboardEvent) => {

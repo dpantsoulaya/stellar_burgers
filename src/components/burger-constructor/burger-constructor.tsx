@@ -30,7 +30,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 	const elements = useSelector(getElements);
 	const ingredients = useSelector(getAllIngredients);
 	const [totalPrice, setTotalPrice] = useState(0);
-	const { isModalOpen, openModal } = useModal();
+	const { isModalOpen, openModal, closeModal } = useModal();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -210,7 +210,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 				</div>
 			</div>
 			{isModalOpen && (
-				<Modal>
+				<Modal onClose={() => closeModal()}>
 					<OrderDetails />
 				</Modal>
 			)}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { AppHeader } from '../components/app-header/app-header';
 import { Home } from '@pages/home/home';
 import { Login } from '@pages/auth/login';
@@ -25,6 +25,7 @@ import { ProfileFeed } from '@pages/profile-feed/profile-feed';
 export const App = (): React.JSX.Element => {
 	const dispatch = useDispatch();
 	const location = useLocation();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		dispatch(checkUserAuth());
@@ -41,7 +42,9 @@ export const App = (): React.JSX.Element => {
 					<Route
 						path={AppRoutes.INGREDIENT}
 						element={
-							<Modal title='Детали ингредиента'>
+							<Modal
+								title='Детали ингредиента'
+								onClose={() => navigate(AppRoutes.HOME)}>
 								<IngredientDetails />
 							</Modal>
 						}
@@ -49,7 +52,7 @@ export const App = (): React.JSX.Element => {
 					<Route
 						path={AppRoutes.FEED_ORDER_INFO}
 						element={
-							<Modal>
+							<Modal onClose={() => navigate(AppRoutes.FEED)}>
 								<OrderInfo />
 							</Modal>
 						}
@@ -57,7 +60,7 @@ export const App = (): React.JSX.Element => {
 					<Route
 						path={AppRoutes.PROFILE_ORDER_INFO}
 						element={
-							<Modal>
+							<Modal onClose={() => navigate(AppRoutes.ORDERS)}>
 								<OrderInfo />
 							</Modal>
 						}

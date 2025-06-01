@@ -9,6 +9,7 @@ import {
 import { HeaderButton } from './header-button';
 import { Routes } from '../../routes';
 import styles from './style.module.css';
+import { Link } from 'react-router-dom';
 
 export const AppHeader = (): React.JSX.Element => {
 	const location = useLocation();
@@ -45,7 +46,9 @@ export const AppHeader = (): React.JSX.Element => {
 				</ul>
 
 				<div className={styles.col}>
-					<Logo />
+					<Link to={Routes.HOME}>
+						<Logo />
+					</Link>
 				</div>
 
 				<div className={styles.col}>

@@ -69,13 +69,17 @@ export const postRequest = <TReturn, TInputData>(
 	data?: TInputData,
 	authorizationToken = ''
 ): Promise<TReturn> => {
-	return request(endpoint, {
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-			Authorization: authorizationToken,
+	return request(
+		endpoint,
+		{
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				Authorization: authorizationToken,
+			},
+			body: JSON.stringify(data),
 		},
-		body: JSON.stringify(data),
-	});
+		authorizationToken
+	);
 };

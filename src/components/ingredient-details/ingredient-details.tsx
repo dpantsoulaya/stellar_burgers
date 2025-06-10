@@ -11,9 +11,11 @@ export const IngredientDetails = (): React.JSX.Element | null => {
 	const ingredient = ingredients.find((i) => i._id == id);
 
 	return ingredient ? (
-		<>
+		<div data-testid='ingredient-details'>
 			<img src={ingredient.image_large} alt='ingredient' />
-			<h2 className={styles.title}>{ingredient.name}</h2>
+			<h2 className={styles.title} data-testid='ingredient-details-name'>
+				{ingredient.name}
+			</h2>
 			{/* Бэк не возвращает описание */}
 			{/* <p>{ingredient.description}</p> */}
 			<div className={styles.characteristics_container}>
@@ -22,6 +24,6 @@ export const IngredientDetails = (): React.JSX.Element | null => {
 				<Characteristic name='Жиры, г' value={ingredient.fat} />
 				<Characteristic name='Углеводы, г' value={ingredient.carbohydrates} />
 			</div>
-		</>
+		</div>
 	) : null;
 };

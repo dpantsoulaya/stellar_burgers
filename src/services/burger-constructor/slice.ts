@@ -8,7 +8,7 @@ export type TConstructorState = {
 	draggingElementIndex: number | null;
 };
 
-const initialState: TConstructorState = {
+export const initialState: TConstructorState = {
 	bun: null,
 	elements: [],
 	draggingElementIndex: null,

@@ -13,7 +13,8 @@ module.exports = {
 		filename: production
 			? 'static/scripts/[name].[contenthash].js'
 			: 'static/scripts/[name].js', // имя нашего бандла
-		publicPath: '/',
+		publicPath: process.env.PUBLIC_URL || '/',
+		clean: true,
 	},
 	//Нужно помочь вебпаку научится работать с jsx и tsx файлами для этого используют ts loader
 	module: {
@@ -87,6 +88,7 @@ module.exports = {
 	plugins: [
 		new HTMLWebpackPlugins({
 			template: path.resolve(__dirname, '..', './public/index.html'),
+			base: process.env.PUBLIC_URL || '/',
 		}),
 		new CleanWebpackPlugin(),
 		new MiniCssExtractPlugin({

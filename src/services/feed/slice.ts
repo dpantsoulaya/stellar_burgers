@@ -7,7 +7,7 @@ export type TFeed = {
 	error: string | null;
 };
 
-const initialState: TFeed = {
+export const initialState: TFeed = {
 	feed: null,
 	error: null,
 };

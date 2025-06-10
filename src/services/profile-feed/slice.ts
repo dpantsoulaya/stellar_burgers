@@ -7,7 +7,7 @@ export type TProfileFeed = {
 	error: string | null;
 };
 
-const initialState: TProfileFeed = {
+export const initialState: TProfileFeed = {
 	profileFeed: null,
 	error: null,
 };

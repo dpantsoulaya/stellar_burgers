@@ -28,6 +28,7 @@ export const DropTarget = ({
 		<div
 			ref={dropTarget}
 			className={`${styles.drop_target}`}
+			data-testid='drop-container'
 			style={{
 				borderColor: isHover ? 'blue' : 'transparent',
 				...style,

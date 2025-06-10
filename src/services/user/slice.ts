@@ -10,7 +10,7 @@ export type TUserState = {
 	errorMessage: string;
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
 	user: null,
 	isAuthChecked: false,
 	loading: false,

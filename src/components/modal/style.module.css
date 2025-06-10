@@ -27,3 +27,7 @@
 .title {
 	flex-grow: 1;
 }
+
+.close_button {
+	background-color: transparent;
+}

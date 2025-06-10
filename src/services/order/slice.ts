@@ -9,7 +9,7 @@ export type TOrderDetailsState = {
 	error: boolean;
 };
 
-const initialState: TOrderDetailsState = {
+export const initialState: TOrderDetailsState = {
 	currentOrder: null,
 	orderDetails: null,
 	loading: false,

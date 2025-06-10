@@ -94,7 +94,9 @@ export const BurgerIngredients = (): React.JSX.Element => {
 
 	return ingredients && ingredients.length > 0 ? (
 		<div>
-			<h1 className='text text_type_main-large'>Соберите бургер</h1>
+			<h1 className='text text_type_main-large' data-testid='header'>
+				Соберите бургер
+			</h1>
 			<div ref={tabsRef} className={styles.tab_container}>
 				<Tab
 					value='Булки'

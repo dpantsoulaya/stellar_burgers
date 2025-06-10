@@ -18,16 +18,16 @@ const IngredientCard = ({
 	});
 
 	return (
-		<>
-			<div className={`ml-4 mr-3 ${styles.card_container}`}>
-				<IngredientCounter ingredientId={ingredient._id} />
+		<div
+			className={`ml-4 mr-3 ${styles.card_container}`}
+			data-testid='ingredient-card'>
+			<IngredientCounter ingredientId={ingredient._id} />
 
-				<img src={ingredient.image} alt='' ref={dragRef} />
+			<img src={ingredient.image} alt='' ref={dragRef} />
 
-				<Price value={ingredient.price} />
-				<span>{ingredient.name}</span>
-			</div>
-		</>
+			<Price value={ingredient.price} />
+			<span>{ingredient.name}</span>
+		</div>
 	);
 };
 export default React.memo(IngredientCard);

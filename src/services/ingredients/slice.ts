@@ -8,7 +8,7 @@ export type TIngredientsState = {
 	error: boolean;
 };
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
 	ingredients: [],
 	loading: false,
 	error: false,
@@ -46,14 +46,5 @@ export const ingredientsSlice = createSlice({
 	},
 });
 
-// TODO:
-// export const { setCurrentIngredient, clearCurrentIngredient } =
-// 	ingredientsSlice.actions;
-
-export const {
-	getAllIngredients,
-	getIngredientsError,
-	getIngredientsLoading,
-	// TODO:
-	//getCurrentIngredient,
-} = ingredientsSlice.selectors;
+export const { getAllIngredients, getIngredientsError, getIngredientsLoading } =
+	ingredientsSlice.selectors;
